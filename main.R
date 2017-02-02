@@ -22,6 +22,8 @@ source('R/create_matching_id_meta.R')
 source('R/create_matching_id_pol.R')
 source('R/filter_sp_day_month.R')
 source('R/interpolation.R')
+source('R/DEM.R')
+
 
 #introducing some vectors that we'll use for formatting and some translation of the source_data 
 en_station_names = c("year", "national_code", "station_code", "latitude", "longitude", "type_pollution", "name", "legit_value", "statistics", "value", "situation", "legend", "comments")
@@ -35,6 +37,10 @@ PM25_titles = c("PM25 pollution over January 2014", "PM25 pollution over Februar
 #downloads the boundaries of Spain and subsets Barcelona from it (we're choosing Barcelona since there's a lot more avaiable data, see Images)
 boundary = getData("GADM", country = 'ESP', level=2, path = 'Data') 
 barcelona = boundary[boundary$NAME_2 == "Barcelona",]
+
+#OPTIONAL, REMOVE THE COMMENTS TO CREATE A DEM MAP OF BARCELONA
+#DEM = create_DEM(barcelona)
+#plot(DEM)
 
 #converts a .shp file containing meta data (and location) of measure stations to SpatialPointDataFrame (also reprojects, intersects, and drops some unnecessary columns
 stations_df = readShapePoints('Data/ESTACIONES_2015', proj4string = CRS(proj4string(barcelona)))
